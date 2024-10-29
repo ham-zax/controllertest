@@ -5,6 +5,7 @@ import time
 from typing import Dict, List, Optional
 import vgamepad
 import logging
+from datetime import datetime
 from src.config.button_mappings import XBOX_TO_XUSB
 
 class MacroRecorder:
@@ -19,6 +20,7 @@ class MacroRecorder:
         self.logger = logging.getLogger(__name__)
         self.saved_macros: Dict[str, List[Dict]] = {}
         self.button_assignments: Dict[str, str] = {}
+        self.history_panel = None  # Will be set by MainWindow
         
         # Load saved macros from file if it exists
         try:
@@ -28,6 +30,10 @@ class MacroRecorder:
                 self.button_assignments = saved_data.get('assignments', {})
         except (FileNotFoundError, json.JSONDecodeError):
             pass
+
+    def set_history_panel(self, history_panel):
+        """Set the history panel reference for logging playback events"""
+        self.history_panel = history_panel
 
     def start_recording(self):
         """Start recording a new macro"""
@@ -69,13 +75,15 @@ class MacroRecorder:
             
         if name and name in self.saved_macros:
             macro = self.saved_macros[name]
-        elif not macro:
+            self.logger.info(f"Starting playback of macro '{name}' with {len(macro)} events")
+        elif macro:
+            self.logger.info(f"Starting playback of unnamed macro with {len(macro)} events")
+        else:
             return
             
         self.playing = True
         self.playback_thread = threading.Thread(target=self._playback_thread, args=(macro,))
         self.playback_thread.start()
-        self.logger.info("Started macro playback")
 
     def stop_playback(self):
         """Stop the current macro playback"""
@@ -95,11 +103,6 @@ class MacroRecorder:
                 if not self.playing:
                     break
 
-                # Validate event structure
-                if not isinstance(event, dict) or "type" not in event or "code" not in event or "state" not in event:
-                    self.logger.error(f"Invalid event format: {event}")
-                    continue
-
                 # Handle delay
                 delay = float(event.get("delay", 0))
                 if delay > 0:
@@ -115,35 +118,64 @@ class MacroRecorder:
                             button = getattr(vgamepad.XUSB_BUTTON, xusb_button)
                             if event["state"] == 1:
                                 self.gamepad.press_button(button=button)
+                                if self.history_panel:
+                                    self.history_panel.add_entry(button_name, True, datetime.now())
                             else:
                                 self.gamepad.release_button(button=button)
+                                if self.history_panel:
+                                    self.history_panel.add_entry(button_name, False, datetime.now())
                     
                     elif event["type"] == "Absolute":
                         # Handle analog inputs
                         if event["code"] == "ABS_X":
-                            self.gamepad.left_joystick_float(x_value_float=event["state"]/32767.0, y_value_float=0)
+                            value = event["state"]/32767.0
+                            self.gamepad.left_joystick_float(x_value_float=value, y_value_float=0)
+                            if self.history_panel:
+                                direction = "right" if value > 0 else "left"
+                                magnitude = abs(int(value * 100))
+                                self.history_panel.add_entry("LEFT", True, datetime.now(), (direction, magnitude))
                         elif event["code"] == "ABS_Y":
-                            self.gamepad.left_joystick_float(x_value_float=0, y_value_float=event["state"]/32767.0)
+                            value = event["state"]/32767.0
+                            self.gamepad.left_joystick_float(x_value_float=0, y_value_float=value)
+                            if self.history_panel:
+                                direction = "down" if value > 0 else "up"
+                                magnitude = abs(int(value * 100))
+                                self.history_panel.add_entry("LEFT", True, datetime.now(), (direction, magnitude))
                         elif event["code"] == "ABS_RX":
-                            self.gamepad.right_joystick_float(x_value_float=event["state"]/32767.0, y_value_float=0)
+                            value = event["state"]/32767.0
+                            self.gamepad.right_joystick_float(x_value_float=value, y_value_float=0)
+                            if self.history_panel:
+                                direction = "right" if value > 0 else "left"
+                                magnitude = abs(int(value * 100))
+                                self.history_panel.add_entry("RIGHT", True, datetime.now(), (direction, magnitude))
                         elif event["code"] == "ABS_RY":
-                            self.gamepad.right_joystick_float(x_value_float=0, y_value_float=event["state"]/32767.0)
+                            value = event["state"]/32767.0
+                            self.gamepad.right_joystick_float(x_value_float=0, y_value_float=value)
+                            if self.history_panel:
+                                direction = "down" if value > 0 else "up"
+                                magnitude = abs(int(value * 100))
+                                self.history_panel.add_entry("RIGHT", True, datetime.now(), (direction, magnitude))
                         elif event["code"] == "ABS_Z":
-                            self.gamepad.left_trigger_float(value_float=event["state"]/255.0)
+                            value = event["state"]/255.0
+                            self.gamepad.left_trigger_float(value_float=value)
+                            if self.history_panel:
+                                self.history_panel.add_entry("LT", True, datetime.now())
                         elif event["code"] == "ABS_RZ":
-                            self.gamepad.right_trigger_float(value_float=event["state"]/255.0)
+                            value = event["state"]/255.0
+                            self.gamepad.right_trigger_float(value_float=value)
+                            if self.history_panel:
+                                self.history_panel.add_entry("RT", True, datetime.now())
 
                     self.gamepad.update()
 
                 except (AttributeError, ValueError) as e:
-                    self.logger.error(f"Error processing event {event}: {str(e)}")
+                    self.logger.error(f"Error processing event: {str(e)}")
                     continue
 
         except Exception as e:
             self.logger.error(f"Error during macro playback: {str(e)}")
         finally:
             self.playing = False
-            self.logger.info("Finished macro playback")
 
     def delete_macro(self, name: str):
         """Delete a saved macro"""

@@ -39,6 +39,9 @@ class MainWindow:
         self.setup_controller()
         self.setup_gui()
         
+        # Connect history panel to macro recorder
+        self.macro_recorder.set_history_panel(self.history_panel)
+        
         # Set up window close handler
         self.window.protocol("WM_DELETE_WINDOW", self.on_closing)
 
@@ -93,8 +96,8 @@ class MainWindow:
         self.counter = setup_counter(left_column)
         self.analog_display = setup_analog_display(middle_column)
         self.debug_panel = setup_debug_info(middle_column)
-        self.macro_controls = setup_macro_controls(right_column, self.macro_recorder)
         self.history_panel = setup_history(right_column)
+        self.macro_controls = setup_macro_controls(right_column, self.macro_recorder)
 
     def run(self):
         """Start the application main loop."""

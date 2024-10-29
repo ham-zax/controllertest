@@ -53,3 +53,27 @@
 2024-10-30 02:39:59,406 - src.core.macro_recorder - INFO - Started macro playback
 2024-10-30 02:39:59,907 - src.core.macro_recorder - INFO - Finished macro playback
 2024-10-30 02:40:03,401 - MainWindow - INFO - Application shutting down...
+2024-10-30 02:41:09,993 - ControllerReader - ERROR - Controller error: 'MainWindow' object has no attribute 'debug_panel'
+2024-10-30 02:41:18,316 - MainWindow - INFO - Application shutting down...
+2024-10-30 02:41:35,000 - MainWindow - INFO - Application shutting down...
+2024-10-30 02:42:18,090 - src.core.macro_recorder - INFO - Starting playback of macro 'stick_south_x' with 5 events
+2024-10-30 02:42:18,091 - src.core.macro_recorder - INFO - [0.000s] Event 1: Left stick Y to 1.00
+2024-10-30 02:42:18,193 - src.core.macro_recorder - INFO - [0.000s] Event 2: Left stick Y to 1.00
+2024-10-30 02:42:18,594 - src.core.macro_recorder - INFO - [0.352s] Event 5: Left stick Y to 0.00
+2024-10-30 02:42:18,594 - src.core.macro_recorder - INFO - Finished macro playback after 0.503s (5 events played)
+2024-10-30 02:42:34,924 - MainWindow - INFO - Application shutting down...
+2024-10-30 02:44:12,087 - MainWindow - INFO - Application shutting down...
+2024-10-30 02:45:08,173 - src.core.macro_recorder - INFO - Starting playback of macro 'stick_south_x' with 5 events
+2024-10-30 02:45:09,844 - src.core.macro_recorder - INFO - Starting playback of macro 'stick_south_x' with 5 events
+2024-10-30 02:45:24,376 - src.core.macro_recorder - INFO - Starting playback of macro 'stick_south_x' with 5 events
+2024-10-30 02:45:26,870 - src.core.macro_recorder - INFO - Starting playback of macro 'stick_south_x' with 5 events
+2024-10-30 02:45:30,220 - src.core.macro_recorder - INFO - Starting playback of macro 'stick_south_x' with 5 events
+2024-10-30 02:45:32,061 - MainWindow - INFO - Application shutting down...
+2024-10-30 02:45:47,299 - ControllerReader - ERROR - Controller error: 'MainWindow' object has no attribute 'debug_panel'
+2024-10-30 02:45:53,805 - MainWindow - INFO - Application shutting down...
+2024-10-30 02:46:02,797 - src.core.macro_recorder - INFO - Starting playback of macro 'stick_south_x' with 5 events
+2024-10-30 02:46:08,974 - src.core.macro_recorder - INFO - Starting playback of macro 'stick_south_x' with 5 events
+2024-10-30 02:46:12,664 - src.core.macro_recorder - INFO - Starting playback of macro 'stick_south_x' with 5 events
+2024-10-30 02:46:15,157 - src.core.macro_recorder - INFO - Starting playback of macro 'stick_south_x' with 5 events
+2024-10-30 02:46:18,513 - src.core.macro_recorder - INFO - Starting playback of macro 'stick_south_x' with 5 events
+2024-10-30 02:46:30,673 - MainWindow - INFO - Application shutting down...
