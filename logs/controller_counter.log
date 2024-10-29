@@ -1,0 +1,4 @@
+2024-10-30 01:24:31,491 - INFO - Initializing ControllerCounter
+2024-10-30 01:24:39,414 - INFO - Application shutting down...
+2024-10-30 01:34:27,475 - ERROR - Failed to initialize ControllerCounter: 'ControllerCounter' object has no attribute 'running'
+2024-10-30 01:34:27,494 - ERROR - Fatal error: 'ControllerCounter' object has no attribute 'running'
