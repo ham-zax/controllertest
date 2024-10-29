@@ -2,3 +2,14 @@
 2024-10-30 01:24:39,414 - INFO - Application shutting down...
 2024-10-30 01:34:27,475 - ERROR - Failed to initialize ControllerCounter: 'ControllerCounter' object has no attribute 'running'
 2024-10-30 01:34:27,494 - ERROR - Fatal error: 'ControllerCounter' object has no attribute 'running'
+2024-10-30 01:45:30,888 - ERROR - Failed to initialize ControllerCounter: 'ControllerCounter' object has no attribute 'running'
+2024-10-30 01:45:30,914 - ERROR - Fatal error: 'ControllerCounter' object has no attribute 'running'
+2024-10-30 01:47:32,121 - ERROR - No gamepad detected
+2024-10-30 01:47:32,122 - ERROR - Failed to initialize ControllerCounter: No gamepad detected. Please connect an Xbox controller and try again.
+2024-10-30 01:47:32,122 - ERROR - Fatal error: No gamepad detected. Please connect an Xbox controller and try again.
+2024-10-30 01:49:21,367 - ERROR - Controller error: Gamepad 0 is not connected
+2024-10-30 01:49:22,368 - ERROR - Controller error: Gamepad 0 is not connected
+2024-10-30 01:49:24,369 - ERROR - Controller error: Gamepad 0 is not connected
+2024-10-30 01:49:28,370 - ERROR - Controller error: Gamepad 0 is not connected
+2024-10-30 01:49:36,371 - ERROR - Controller error: Gamepad 0 is not connected
+2024-10-30 01:49:52,371 - ERROR - Controller error: Gamepad 0 is not connected

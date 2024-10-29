@@ -156,6 +156,8 @@ class ControllerCounter:
         self.logger.info("Initializing ControllerCounter")
 
         try:
+            # Flag for thread control
+            self.running = True
             # Initialize macro recorder
             self.macro_recorder = MacroRecorder()
 
@@ -198,6 +200,34 @@ class ControllerCounter:
             self.timer_label.pack(pady=5)
             self.start_time = time.time()
             self.update_timer()
+
+            # Counter frame
+            counter_frame = tk.LabelFrame(
+                self.window,
+                text="1-Second Counter",
+                padx=10,
+                pady=10
+            )
+            counter_frame.pack(fill="x", padx=10, pady=5)
+            
+            self.counter_label = tk.Label(
+                counter_frame,
+                text="Current count (1s): 0",
+                font=('Arial', 12)
+            )
+            self.counter_label.pack(pady=5)
+            
+            self.last_count_label = tk.Label(
+                counter_frame,
+                text="Previous count: 0",
+                font=('Arial', 12)
+            )
+            self.last_count_label.pack(pady=5)
+
+            # Initialize counters and timing
+            self.press_count = 0
+            self.last_reset = time.time()
+            self.last_count = 0
 
             # Analog sticks frame
             analog_frame = tk.LabelFrame(
@@ -299,8 +329,6 @@ class ControllerCounter:
             # Debug information
             self.debug_info = {}
             
-            # Flag for thread control
-            self.running = True
             
             # Start controller input thread
             self.controller_thread = threading.Thread(target=self.read_controller)
@@ -322,6 +350,27 @@ class ControllerCounter:
             elapsed = int(time.time() - self.start_time)
             self.timer_label.config(text=f"Time: {elapsed}s")
             self.window.after(1000, self.update_timer)
+
+    def update_counter(self):
+        """Update the input counter and handle one-second resets."""
+        current_time = time.time()
+        
+        # If more than a second has passed
+        if current_time - self.last_reset >= 1:
+            # Store the last count before resetting
+            self.last_count = self.press_count
+            self.last_count_label.config(
+                text=f"Previous count: {self.last_count}"
+            )
+            
+            # Reset counter
+            self.press_count = 0
+            self.last_reset = current_time
+        
+        self.press_count += 1
+        self.counter_label.config(
+            text=f"Current count (1s): {self.press_count}"
+        )
 
     def setup_macro_controls(self):
         """Setup the macro recording and playback controls."""
@@ -529,6 +578,10 @@ class ControllerCounter:
             )
             
             self.add_to_history(input_name, is_pressed, timestamp)
+            
+            # Update counter on press
+            if is_pressed:
+                self.update_counter()
             
             # Record event if macro recording is active
             if event and self.macro_recorder.recording:
