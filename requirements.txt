@@ -1,2 +1,2 @@
-inputs==0.5
-vgamepad==0.0.8
+inputs>=0.5
+vgamepad>=0.0.8

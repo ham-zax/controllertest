@@ -13,3 +13,8 @@
 2024-10-30 01:49:28,370 - ERROR - Controller error: Gamepad 0 is not connected
 2024-10-30 01:49:36,371 - ERROR - Controller error: Gamepad 0 is not connected
 2024-10-30 01:49:52,371 - ERROR - Controller error: Gamepad 0 is not connected
+2024-10-30 02:14:15,581 - root - ERROR - Fatal error: name 'vgamepad' is not defined
+2024-10-30 02:22:29,955 - ControllerCounter - ERROR - Fatal error: 'MainWindow' object has no attribute 'macro_recorder'
+2024-10-30 02:23:04,115 - ControllerReader - ERROR - Controller error: No gamepad found.
+2024-10-30 02:23:26,177 - MainWindow - INFO - Application shutting down...
+2024-10-30 02:24:00,944 - MainWindow - INFO - Application shutting down...
