@@ -77,3 +77,4 @@
 2024-10-30 02:46:15,157 - src.core.macro_recorder - INFO - Starting playback of macro 'stick_south_x' with 5 events
 2024-10-30 02:46:18,513 - src.core.macro_recorder - INFO - Starting playback of macro 'stick_south_x' with 5 events
 2024-10-30 02:46:30,673 - MainWindow - INFO - Application shutting down...
+2024-10-30 05:16:40,814 - ControllerReader - ERROR - Controller error: Gamepad 1 is not connected
