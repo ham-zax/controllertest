@@ -18,3 +18,38 @@
 2024-10-30 02:23:04,115 - ControllerReader - ERROR - Controller error: No gamepad found.
 2024-10-30 02:23:26,177 - MainWindow - INFO - Application shutting down...
 2024-10-30 02:24:00,944 - MainWindow - INFO - Application shutting down...
+2024-10-30 02:28:42,363 - ControllerReader - ERROR - Controller error: No gamepad found.
+2024-10-30 02:28:55,789 - MainWindow - INFO - Application shutting down...
+2024-10-30 02:30:01,469 - MainWindow - INFO - Application shutting down...
+2024-10-30 02:32:01,628 - MainWindow - INFO - Application shutting down...
+2024-10-30 02:33:29,033 - ControllerCounter - ERROR - Fatal error: MacroRecorder.__init__() missing 1 required positional argument: 'gamepad'
+2024-10-30 02:33:41,836 - ControllerCounter - ERROR - Fatal error: MacroRecorder.__init__() missing 1 required positional argument: 'gamepad'
+2024-10-30 02:34:18,096 - ControllerCounter - ERROR - Fatal error: MacroRecorder.__init__() missing 1 required positional argument: 'gamepad'
+2024-10-30 02:34:37,570 - ControllerReader - ERROR - Controller error: 'MainWindow' object has no attribute 'debug_panel'
+2024-10-30 02:34:37,686 - ControllerCounter - ERROR - Fatal error: 'MacroRecorder' object has no attribute 'saved_macros'
+2024-10-30 02:34:48,766 - ControllerCounter - ERROR - Fatal error: 'MacroRecorder' object has no attribute 'saved_macros'
+2024-10-30 02:36:25,582 - ControllerCounter - ERROR - Fatal error: 'MacroRecorder' object has no attribute 'saved_macros'
+2024-10-30 02:37:07,067 - src.core.macro_recorder - ERROR - Error during macro playback: 'time'
+2024-10-30 02:37:07,067 - src.core.macro_recorder - INFO - Started macro playback
+2024-10-30 02:37:10,055 - src.core.macro_recorder - ERROR - Error during macro playback: 'time'
+2024-10-30 02:37:10,056 - src.core.macro_recorder - INFO - Started macro playback
+2024-10-30 02:37:10,841 - src.core.macro_recorder - ERROR - Error during macro playback: 'time'
+2024-10-30 02:37:10,841 - src.core.macro_recorder - INFO - Started macro playback
+2024-10-30 02:37:37,381 - MainWindow - INFO - Application shutting down...
+2024-10-30 02:38:23,759 - src.core.macro_recorder - ERROR - Invalid event format: {'type': 'Absolute', 'code': 'ABS_Y', 'state': 32767, 'delay': 0}
+2024-10-30 02:38:23,759 - src.core.macro_recorder - INFO - Started macro playback
+2024-10-30 02:38:23,760 - src.core.macro_recorder - ERROR - Invalid event format: {'type': 'Absolute', 'code': 'ABS_Y', 'state': 32767, 'delay': 0.1}
+2024-10-30 02:38:23,760 - src.core.macro_recorder - ERROR - Invalid event format: {'type': 'Key', 'code': 'BTN_WEST', 'state': 1, 'delay': 0.1}
+2024-10-30 02:38:23,761 - src.core.macro_recorder - ERROR - Invalid event format: {'type': 'Key', 'code': 'BTN_WEST', 'state': 0, 'delay': 0.15}
+2024-10-30 02:38:23,761 - src.core.macro_recorder - ERROR - Invalid event format: {'type': 'Absolute', 'code': 'ABS_Y', 'state': 0, 'delay': 0.15}
+2024-10-30 02:38:23,761 - src.core.macro_recorder - INFO - Finished macro playback
+2024-10-30 02:38:52,662 - MainWindow - INFO - Application shutting down...
+2024-10-30 02:39:53,160 - src.core.macro_recorder - INFO - Started macro playback
+2024-10-30 02:39:53,662 - src.core.macro_recorder - INFO - Finished macro playback
+2024-10-30 02:39:56,485 - src.core.macro_recorder - INFO - Started macro playback
+2024-10-30 02:39:56,986 - src.core.macro_recorder - INFO - Finished macro playback
+2024-10-30 02:39:58,217 - src.core.macro_recorder - INFO - Started macro playback
+2024-10-30 02:39:58,719 - src.core.macro_recorder - INFO - Finished macro playback
+2024-10-30 02:39:59,406 - src.core.macro_recorder - INFO - Started macro playback
+2024-10-30 02:39:59,907 - src.core.macro_recorder - INFO - Finished macro playback
+2024-10-30 02:40:03,401 - MainWindow - INFO - Application shutting down...

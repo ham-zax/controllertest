@@ -7,6 +7,7 @@ import logging
 import json
 import threading
 import time
+import vgamepad
 from src.core.controller_reader import ControllerReader
 from src.core.input_processor import InputProcessor
 from src.core.macro_recorder import MacroRecorder
@@ -26,6 +27,7 @@ class MainWindow:
         self.window = tk.Tk()
         self.window.title("Xbox Controller Input Counter & Macro Recorder")
         self.window.geometry("1200x800")
+        self.window.minsize(1000, 600)  # Set minimum window size
         
         self.running = True
         self.press_count = 0
@@ -53,7 +55,9 @@ class MainWindow:
 
     def setup_controller(self):
         """Setup controller input handling."""
-        self.macro_recorder = MacroRecorder()
+        # Create virtual gamepad for macro playback
+        virtual_gamepad = vgamepad.VX360Gamepad()
+        self.macro_recorder = MacroRecorder(virtual_gamepad)
         self.input_processor = InputProcessor(self)
         self.controller_reader = ControllerReader(self.input_processor)
         
@@ -64,15 +68,25 @@ class MainWindow:
 
     def setup_gui(self):
         """Setup the main GUI components."""
-        # Create main columns
-        left_column = ttk.Frame(self.window)
-        left_column.pack(side=tk.LEFT, fill="both", expand=True, padx=5, pady=5)
+        # Create main container with grid
+        self.main_container = ttk.Frame(self.window)
+        self.main_container.pack(fill="both", expand=True)
+        
+        # Configure grid weights
+        self.main_container.grid_columnconfigure(0, weight=1)
+        self.main_container.grid_columnconfigure(1, weight=1)
+        self.main_container.grid_columnconfigure(2, weight=1)
+        self.main_container.grid_rowconfigure(0, weight=1)
 
-        middle_column = ttk.Frame(self.window)
-        middle_column.pack(side=tk.LEFT, fill="both", expand=True, padx=5, pady=5)
+        # Create columns as frames
+        left_column = ttk.Frame(self.main_container)
+        left_column.grid(row=0, column=0, sticky="nsew", padx=5, pady=5)
 
-        right_column = ttk.Frame(self.window)
-        right_column.pack(side=tk.LEFT, fill="both", expand=True, padx=5, pady=5)
+        middle_column = ttk.Frame(self.main_container)
+        middle_column.grid(row=0, column=1, sticky="nsew", padx=5, pady=5)
+
+        right_column = ttk.Frame(self.main_container)
+        right_column.grid(row=0, column=2, sticky="nsew", padx=5, pady=5)
 
         # Setup components
         self.input_status = setup_input_status(left_column)
@@ -152,4 +166,7 @@ class MainWindow:
 
     def update_analog_display(self, stick, x, y):
         """Update analog stick display."""
+        direction, magnitude = self.analog_display.get_analog_direction(x, y)
         self.analog_display.update_stick(stick, x, y)
+        # Add analog movement to history
+        self.history_panel.add_entry(stick, True, datetime.now(), (direction, magnitude))

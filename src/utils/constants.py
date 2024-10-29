@@ -25,6 +25,21 @@ BUTTON_NAMES = {
     'ABS_HAT0Y': {-1: 'DPad Up', 1: 'DPad Down'}
 }
 
+# XUSB button mappings (evdev to vgamepad)
+XUSB_BUTTON_MAPPING = {
+    'BTN_NORTH': 'Y',
+    'BTN_SOUTH': 'A',
+    'BTN_EAST': 'B',
+    'BTN_WEST': 'X',
+    'BTN_TL': 'LEFT_SHOULDER',
+    'BTN_TR': 'RIGHT_SHOULDER',
+    'BTN_SELECT': 'BACK',
+    'BTN_START': 'START',
+    'BTN_MODE': 'GUIDE',
+    'BTN_THUMBL': 'LEFT_THUMB',
+    'BTN_THUMBR': 'RIGHT_THUMB'
+}
+
 # Analog stick mappings
 ANALOG_MAPPING = {
     'ABS_X': ('LEFT', 'X'),
