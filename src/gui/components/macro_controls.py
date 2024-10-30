@@ -2,6 +2,7 @@
 
 import tkinter as tk
 from tkinter import ttk
+from src.utils.constants import BUTTON_NAMES
 
 class MacroControls:
     def __init__(self, parent, macro_recorder):
@@ -165,11 +166,15 @@ class MacroControls:
         assign_label.pack(side=tk.LEFT, padx=2)
         CreateToolTip(assign_label, "Select a button to assign the macro to")
         
+        # Create a mapping of friendly names to internal names
+        self.friendly_to_internal = {BUTTON_NAMES[k]: k for k in ['BTN_TR', 'BTN_TL', 'BTN_NORTH', 'BTN_SOUTH', 'BTN_EAST', 'BTN_WEST']}
+        friendly_names = list(self.friendly_to_internal.keys())
+        
         self.button_var = tk.StringVar()
         button_combo = ttk.Combobox(
             assign_frame,
             textvariable=self.button_var,
-            values=['BTN_TR', 'BTN_TL', 'BTN_NORTH', 'BTN_SOUTH', 'BTN_EAST', 'BTN_WEST'],
+            values=friendly_names,
             width=15
         )
         button_combo.pack(side=tk.LEFT, padx=2)
@@ -275,11 +280,14 @@ class MacroControls:
 
     def assign_macro(self):
         """Assign macro to a button."""
-        button = self.button_var.get()
+        friendly_button = self.button_var.get()
         selection = self.macro_listbox.curselection()
-        if button and selection:
+        if friendly_button and selection:
             name = self.macro_listbox.get(selection[0])
-            self.macro_recorder.assign_macro(name, button)
+            # Convert friendly name back to internal name
+            internal_button = self.friendly_to_internal.get(friendly_button)
+            if internal_button:
+                self.macro_recorder.assign_macro(name, internal_button)
 
 class CreateToolTip:
     """Create a tooltip for a given widget."""
