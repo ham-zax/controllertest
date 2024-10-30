@@ -31,3 +31,14 @@ ENV/
 # Project specific
 .aider*
 .env
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Logs
+*.log
+
+# IDE specific files
+.vscode/
+.idea/
