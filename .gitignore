@@ -4,6 +4,7 @@ logs/
 
 # Python cache files
 __pycache__/
+*/__pycache__
 *.py[cod]
 *$py.class
 
@@ -22,3 +23,5 @@ env/
 .idea/
 *.swp
 *.swo
+.aider*
+.env
