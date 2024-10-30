@@ -41,6 +41,8 @@ class MacroRecorder:
         self.current_macro = []
         self.record_start_time = time.time()
         self.logger.info("Started recording macro")
+        if self.history_panel:
+            self.history_panel.add_macro_event("record_start")
 
     def stop_recording(self, name: str = None):
         """Stop recording the current macro and optionally save it"""
@@ -51,6 +53,8 @@ class MacroRecorder:
             self.saved_macros[name] = self.current_macro.copy()
             self._save_to_file()
             self.logger.info(f"Saved macro '{name}'")
+            if self.history_panel:
+                self.history_panel.add_macro_event("record_end")
         
         self.logger.info("Stopped recording macro")
         return self.current_macro
@@ -76,8 +80,12 @@ class MacroRecorder:
         if name and name in self.saved_macros:
             macro = self.saved_macros[name]
             self.logger.info(f"Starting playback of macro '{name}' with {len(macro)} events")
+            if self.history_panel:
+                self.history_panel.add_macro_event("playback_start")
         elif macro:
             self.logger.info(f"Starting playback of unnamed macro with {len(macro)} events")
+            if self.history_panel:
+                self.history_panel.add_macro_event("playback_start")
         else:
             return
             
@@ -87,8 +95,11 @@ class MacroRecorder:
 
     def stop_playback(self):
         """Stop the current macro playback"""
+        if not self.playing:
+            return
+            
         self.playing = False
-        if self.playback_thread:
+        if self.playback_thread and self.playback_thread.is_alive():
             self.playback_thread.join()
         self.logger.info("Stopped macro playback")
 
@@ -119,11 +130,11 @@ class MacroRecorder:
                             if event["state"] == 1:
                                 self.gamepad.press_button(button=button)
                                 if self.history_panel:
-                                    self.history_panel.add_entry(button_name, True, datetime.now())
+                                    self.history_panel.add_entry(button_name, True, datetime.now(), entry_type="macro_playback")
                             else:
                                 self.gamepad.release_button(button=button)
                                 if self.history_panel:
-                                    self.history_panel.add_entry(button_name, False, datetime.now())
+                                    self.history_panel.add_entry(button_name, False, datetime.now(), entry_type="macro_playback")
                     
                     elif event["type"] == "Absolute":
                         # Handle analog inputs
@@ -133,38 +144,38 @@ class MacroRecorder:
                             if self.history_panel:
                                 direction = "right" if value > 0 else "left"
                                 magnitude = abs(int(value * 100))
-                                self.history_panel.add_entry("LEFT", True, datetime.now(), (direction, magnitude))
+                                self.history_panel.add_entry("LEFT", True, datetime.now(), (direction, magnitude), entry_type="macro_playback")
                         elif event["code"] == "ABS_Y":
                             value = event["state"]/32767.0
                             self.gamepad.left_joystick_float(x_value_float=0, y_value_float=value)
                             if self.history_panel:
                                 direction = "down" if value > 0 else "up"
                                 magnitude = abs(int(value * 100))
-                                self.history_panel.add_entry("LEFT", True, datetime.now(), (direction, magnitude))
+                                self.history_panel.add_entry("LEFT", True, datetime.now(), (direction, magnitude), entry_type="macro_playback")
                         elif event["code"] == "ABS_RX":
                             value = event["state"]/32767.0
                             self.gamepad.right_joystick_float(x_value_float=value, y_value_float=0)
                             if self.history_panel:
                                 direction = "right" if value > 0 else "left"
                                 magnitude = abs(int(value * 100))
-                                self.history_panel.add_entry("RIGHT", True, datetime.now(), (direction, magnitude))
+                                self.history_panel.add_entry("RIGHT", True, datetime.now(), (direction, magnitude), entry_type="macro_playback")
                         elif event["code"] == "ABS_RY":
                             value = event["state"]/32767.0
                             self.gamepad.right_joystick_float(x_value_float=0, y_value_float=value)
                             if self.history_panel:
                                 direction = "down" if value > 0 else "up"
                                 magnitude = abs(int(value * 100))
-                                self.history_panel.add_entry("RIGHT", True, datetime.now(), (direction, magnitude))
+                                self.history_panel.add_entry("RIGHT", True, datetime.now(), (direction, magnitude), entry_type="macro_playback")
                         elif event["code"] == "ABS_Z":
                             value = event["state"]/255.0
                             self.gamepad.left_trigger_float(value_float=value)
                             if self.history_panel:
-                                self.history_panel.add_entry("LT", True, datetime.now())
+                                self.history_panel.add_entry("LT", True, datetime.now(), entry_type="macro_playback")
                         elif event["code"] == "ABS_RZ":
                             value = event["state"]/255.0
                             self.gamepad.right_trigger_float(value_float=value)
                             if self.history_panel:
-                                self.history_panel.add_entry("RT", True, datetime.now())
+                                self.history_panel.add_entry("RT", True, datetime.now(), entry_type="macro_playback")
 
                     self.gamepad.update()
 
@@ -175,7 +186,11 @@ class MacroRecorder:
         except Exception as e:
             self.logger.error(f"Error during macro playback: {str(e)}")
         finally:
+            # Ensure playing state is reset and completion is logged
+            was_playing = self.playing
             self.playing = False
+            if was_playing and self.history_panel:
+                self.history_panel.add_macro_event("playback_end")
 
     def delete_macro(self, name: str):
         """Delete a saved macro"""

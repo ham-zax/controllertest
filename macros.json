@@ -1,54 +1,19 @@
 {
   "macros": {
-    "stick_south_x": [
-      {
-        "type": "Absolute",
-        "code": "ABS_Y",
-        "state": 32767,
-        "delay": 0
-      },
-      {
-        "type": "Absolute",
-        "code": "ABS_Y",
-        "state": 32767,
-        "delay": 0.1
-      },
+    "test": [
       {
         "type": "Key",
         "code": "BTN_WEST",
         "state": 1,
-        "delay": 0.1
+        "delay": 1730247359.3655436
       },
       {
         "type": "Key",
         "code": "BTN_WEST",
         "state": 0,
-        "delay": 0.15
-      },
-      {
-        "type": "Absolute",
-        "code": "ABS_Y",
-        "state": 0,
-        "delay": 0.15
-      }
-    ],
-    "teat": [
-      {
-        "type": "Key",
-        "code": "BTN_WEST",
-        "state": 1,
-        "delay": 1730246548.1102533
-      },
-      {
-        "type": "Key",
-        "code": "BTN_WEST",
-        "state": 0,
-        "delay": 1730246548.2402542
+        "delay": 1730247359.4744506
       }
     ]
   },
-  "assignments": {
-    "BTN_TR": "stick_south_x",
-    "BTN_NORTH": "teat"
-  }
+  "assignments": {}
 }

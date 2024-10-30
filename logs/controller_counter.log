@@ -101,3 +101,49 @@
 2024-10-30 05:39:52,234 - MainWindow - INFO - Application shutting down...
 2024-10-30 05:40:26,102 - MainWindow - INFO - Application shutting down...
 2024-10-30 05:40:35,416 - src.core.macro_recorder - INFO - Starting playback of macro 'teat' with 2 events
+2024-10-30 05:42:49,540 - src.core.macro_recorder - INFO - Starting playback of macro 'teat' with 2 events
+2024-10-30 05:42:55,246 - MainWindow - INFO - Application shutting down...
+2024-10-30 05:44:19,980 - src.core.macro_recorder - INFO - Starting playback of macro 'stick_south_x' with 5 events
+2024-10-30 05:44:26,114 - src.core.macro_recorder - INFO - Starting playback of macro 'teat' with 2 events
+2024-10-30 05:44:59,288 - ControllerReader - ERROR - Unexpected error: get_gamepad() got an unexpected keyword argument 'blocking'
+2024-10-30 05:44:59,389 - ControllerReader - ERROR - Unexpected error: get_gamepad() got an unexpected keyword argument 'blocking'
+2024-10-30 05:44:59,490 - ControllerReader - ERROR - Unexpected error: get_gamepad() got an unexpected keyword argument 'blocking'
+2024-10-30 05:44:59,591 - ControllerReader - ERROR - Unexpected error: get_gamepad() got an unexpected keyword argument 'blocking'
+2024-10-30 05:44:59,692 - ControllerReader - ERROR - Unexpected error: get_gamepad() got an unexpected keyword argument 'blocking'
+2024-10-30 05:44:59,793 - ControllerReader - ERROR - Unexpected error: get_gamepad() got an unexpected keyword argument 'blocking'
+2024-10-30 05:44:59,893 - ControllerReader - ERROR - Unexpected error: get_gamepad() got an unexpected keyword argument 'blocking'
+2024-10-30 05:44:59,994 - ControllerReader - ERROR - Unexpected error: get_gamepad() got an unexpected keyword argument 'blocking'
+2024-10-30 05:45:00,095 - ControllerReader - ERROR - Unexpected error: get_gamepad() got an unexpected keyword argument 'blocking'
+2024-10-30 05:45:00,196 - ControllerReader - ERROR - Unexpected error: get_gamepad() got an unexpected keyword argument 'blocking'
+2024-10-30 05:45:00,297 - ControllerReader - ERROR - Unexpected error: get_gamepad() got an unexpected keyword argument 'blocking'
+2024-10-30 05:45:00,398 - ControllerReader - ERROR - Unexpected error: get_gamepad() got an unexpected keyword argument 'blocking'
+2024-10-30 05:45:00,498 - ControllerReader - ERROR - Unexpected error: get_gamepad() got an unexpected keyword argument 'blocking'
+2024-10-30 05:45:00,599 - ControllerReader - ERROR - Unexpected error: get_gamepad() got an unexpected keyword argument 'blocking'
+2024-10-30 05:45:00,700 - ControllerReader - ERROR - Unexpected error: get_gamepad() got an unexpected keyword argument 'blocking'
+2024-10-30 05:45:00,801 - ControllerReader - ERROR - Unexpected error: get_gamepad() got an unexpected keyword argument 'blocking'
+2024-10-30 05:45:00,902 - ControllerReader - ERROR - Unexpected error: get_gamepad() got an unexpected keyword argument 'blocking'
+2024-10-30 05:45:01,003 - ControllerReader - ERROR - Unexpected error: get_gamepad() got an unexpected keyword argument 'blocking'
+2024-10-30 05:45:01,103 - ControllerReader - ERROR - Unexpected error: get_gamepad() got an unexpected keyword argument 'blocking'
+2024-10-30 05:45:01,204 - ControllerReader - ERROR - Unexpected error: get_gamepad() got an unexpected keyword argument 'blocking'
+2024-10-30 05:45:01,305 - ControllerReader - ERROR - Unexpected error: get_gamepad() got an unexpected keyword argument 'blocking'
+2024-10-30 05:45:01,405 - ControllerReader - ERROR - Unexpected error: get_gamepad() got an unexpected keyword argument 'blocking'
+2024-10-30 05:45:01,506 - ControllerReader - ERROR - Unexpected error: get_gamepad() got an unexpected keyword argument 'blocking'
+2024-10-30 05:45:01,607 - ControllerReader - ERROR - Unexpected error: get_gamepad() got an unexpected keyword argument 'blocking'
+2024-10-30 05:45:01,708 - ControllerReader - ERROR - Unexpected error: get_gamepad() got an unexpected keyword argument 'blocking'
+2024-10-30 05:45:01,808 - ControllerReader - ERROR - Unexpected error: get_gamepad() got an unexpected keyword argument 'blocking'
+2024-10-30 05:45:01,909 - ControllerReader - ERROR - Unexpected error: get_gamepad() got an unexpected keyword argument 'blocking'
+2024-10-30 05:45:02,010 - ControllerReader - ERROR - Unexpected error: get_gamepad() got an unexpected keyword argument 'blocking'
+2024-10-30 05:45:02,110 - ControllerReader - ERROR - Unexpected error: get_gamepad() got an unexpected keyword argument 'blocking'
+2024-10-30 05:45:02,211 - ControllerReader - ERROR - Unexpected error: get_gamepad() got an unexpected keyword argument 'blocking'
+2024-10-30 05:45:02,312 - ControllerReader - ERROR - Unexpected error: get_gamepad() got an unexpected keyword argument 'blocking'
+2024-10-30 05:45:02,393 - MainWindow - INFO - Application shutting down...
+2024-10-30 05:45:28,524 - MainWindow - INFO - Application shutting down...
+2024-10-30 05:45:42,938 - src.core.macro_recorder - INFO - Deleted macro 'teat'
+2024-10-30 05:45:44,252 - src.core.macro_recorder - INFO - Deleted macro 'stick_south_x'
+2024-10-30 05:46:02,686 - src.core.macro_recorder - INFO - Saved macro 'test'
+2024-10-30 05:46:02,687 - src.core.macro_recorder - INFO - Stopped recording macro
+2024-10-30 05:46:08,406 - src.core.macro_recorder - INFO - Adjusted timing for macro 'test' with speed 1.0
+2024-10-30 05:46:14,513 - src.core.macro_recorder - INFO - Starting playback of macro 'test' with 2 events
+2024-10-30 05:47:41,211 - src.core.macro_recorder - INFO - Starting playback of macro 'test' with 2 events
+2024-10-30 05:47:51,598 - MainWindow - INFO - Application shutting down...
+2024-10-30 05:50:16,032 - src.core.macro_recorder - INFO - Starting playback of macro 'test' with 2 events
