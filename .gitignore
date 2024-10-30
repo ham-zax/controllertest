@@ -1,11 +1,16 @@
 # Logs
 logs/
 *.log
+log/
+controller_counter.log
 
 # Python cache files
 __pycache__/
 *.py[cod]
 *$py.class
+**/__pycache__/
+src/**/__pycache__/
+*.pyc
 
 # Python distribution / packaging
 dist/
@@ -16,9 +21,15 @@ build/
 venv/
 env/
 .env/
+.venv/
+ENV/
 
 # IDE specific files
 .vscode/
 .idea/
 *.swp
 *.swo
+
+# Project specific
+.aider*
+.env
