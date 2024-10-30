@@ -23,23 +23,54 @@ class AnalogDisplay:
         )
         self.right_stick_label.pack(pady=5)
 
+        self.direction_map = {
+            "North": "↓",
+            "South": "↑",
+            "East": "→",
+            "West": "←",
+            "Northeast": "↘",
+            "Northwest": "↙",
+            "Southeast": "↗",
+            "Southwest": "↖",
+            "up": "↑",
+            "down": "↓",
+            "left": "←",
+            "right": "→",
+            "Up": "↑",
+            "Down": "↓",
+            "Left": "←",
+            "Right": "→",
+            "UpLeft": "↖",
+            "UpRight": "↗",
+            "DownLeft": "↙",
+            "DownRight": "↘",
+            "Center": "●"
+        }
+
     def update_stick(self, stick, x, y):
         """Update the display for analog stick position."""
         direction, magnitude = self.get_analog_direction(x, y)
+        simple_direction = self.direction_map.get(direction, direction)
         
         if stick == 'LEFT':
-            self.left_stick_label.config(
-                text=f"Left Stick: {direction} ({magnitude}%)"
-            )
+            if magnitude == 0:
+                self.left_stick_label.config(text="Left Stick: Center")
+            else:
+                self.left_stick_label.config(
+                    text=f"Left Stick: {simple_direction} ({magnitude}%)"
+                )
         else:
-            self.right_stick_label.config(
-                text=f"Right Stick: {direction} ({magnitude}%)"
-            )
+            if magnitude == 0:
+                self.right_stick_label.config(text="Right Stick: Center")
+            else:
+                self.right_stick_label.config(
+                    text=f"Right Stick: {simple_direction} ({magnitude}%)"
+                )
 
     def get_analog_direction(self, x, y):
         """Convert analog stick coordinates to direction and magnitude."""
         analog_max = 32767
-        deadzone = 0.1
+        deadzone = 0.2  # Increased deadzone
         
         x_norm = x / analog_max
         y_norm = -y / analog_max
@@ -48,6 +79,10 @@ class AnalogDisplay:
         
         if magnitude < deadzone:
             return "Center", 0
+
+        # Normalize magnitude to account for deadzone
+        adjusted_magnitude = (magnitude - deadzone) / (1 - deadzone)
+        magnitude_percent = min(100, max(0, round(adjusted_magnitude * 100)))
 
         angle = math.degrees(math.atan2(y_norm, x_norm))
         if angle < 0:
@@ -60,7 +95,7 @@ class AnalogDisplay:
         index = int((angle + 22.5) / 45) % 8
         direction = directions[index]
 
-        return direction, round(magnitude * 100)
+        return direction, magnitude_percent
 
 def setup_analog_display(parent):
     """Create and return an AnalogDisplay instance."""

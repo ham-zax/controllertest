@@ -21,12 +21,19 @@ class HistoryPanel:
         self.history_text = tk.Text(self.text_frame, height=15, width=50, wrap=tk.WORD)
         self.history_text.grid(row=0, column=0, sticky="nsew")
         
+        # Define tags for different types of entries
+        self.history_text.tag_configure("macro_event", foreground="blue")
+        self.history_text.tag_configure("macro_input", foreground="green")
+        
         scrollbar = ttk.Scrollbar(self.text_frame, command=self.history_text.yview)
         scrollbar.grid(row=0, column=1, sticky="ns")
         self.history_text.config(yscrollcommand=scrollbar.set)
 
-    def add_entry(self, input_name: str, state: bool, timestamp=None, extra_info=None):
-        """Add an input event to the history display."""
+    def add_entry(self, input_name: str, state: bool, timestamp=None, extra_info=None, entry_type="normal"):
+        """
+        Add an input event to the history display.
+        entry_type can be: "normal", "macro_playback", "macro_event"
+        """
         try:
             if timestamp is None:
                 timestamp = datetime.now()
@@ -37,7 +44,32 @@ class HistoryPanel:
             if input_name in ["LEFT", "RIGHT"]:
                 if isinstance(extra_info, tuple) and len(extra_info) == 2:
                     direction, magnitude = extra_info
-                    history_entry = f"[{timestamp_str}] {input_name} Stick: {direction} ({magnitude}%)\n"
+                    # Simplify direction names
+                    direction_map = {
+                        "North": "↓",
+                        "South": "↑",
+                        "East": "→",
+                        "West": "←",
+                        "Northeast": "↘",
+                        "Northwest": "↙",
+                        "Southeast": "↗",
+                        "Southwest": "↖",
+                        "up": "↑",
+                        "down": "↓",
+                        "left": "←",
+                        "right": "→",
+                        # Add analog stick specific mappings
+                        "Up": "↑",
+                        "Down": "↓",
+                        "Left": "←",
+                        "Right": "→",
+                        "UpLeft": "↖",
+                        "UpRight": "↗",
+                        "DownLeft": "↙",
+                        "DownRight": "↘"
+                    }
+                    simple_direction = direction_map.get(direction, direction)
+                    history_entry = f"[{timestamp_str}] {input_name} Stick: {simple_direction} ({magnitude}%)\n"
                 else:
                     history_entry = f"[{timestamp_str}] {input_name} Stick moved\n"
             else:
@@ -45,7 +77,14 @@ class HistoryPanel:
                 state_str = "pressed" if state else "released"
                 history_entry = f"[{timestamp_str}] {input_name} {state_str}\n"
             
-            self.history_text.insert(tk.END, history_entry)
+            # Insert with appropriate tag based on entry type
+            if entry_type == "macro_playback":
+                self.history_text.insert(tk.END, history_entry, "macro_input")
+            elif entry_type == "macro_event":
+                self.history_text.insert(tk.END, history_entry, "macro_event")
+            else:
+                self.history_text.insert(tk.END, history_entry)
+                
             self.history_text.see(tk.END)
             
             # Limit history to last 1000 lines to prevent excessive memory usage
@@ -55,6 +94,23 @@ class HistoryPanel:
                 
         except Exception as e:
             print(f"Error adding to history: {e}")
+
+    def add_macro_event(self, event_type: str):
+        """Add a macro-related event to the history."""
+        timestamp = datetime.now()
+        timestamp_str = timestamp.strftime("%H:%M:%S.%f")[:-3]
+        
+        event_messages = {
+            "playback_start": "=== Macro Playback Started ===",
+            "playback_end": "=== Macro Playback Completed ===",
+            "record_start": "=== Macro Recording Started ===",
+            "record_end": "=== Macro Recording Completed ===",
+        }
+        
+        message = event_messages.get(event_type, "=== Macro Event ===")
+        history_entry = f"[{timestamp_str}] {message}\n"
+        self.history_text.insert(tk.END, history_entry, "macro_event")
+        self.history_text.see(tk.END)
 
 def setup_history(parent):
     """Create and return a HistoryPanel instance."""
