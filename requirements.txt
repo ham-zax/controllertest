@@ -1,2 +1,4 @@
 inputs>=0.5
 vgamepad>=0.0.8
+vgamepad==0.0.8
+tkinter
