@@ -95,7 +95,7 @@ class HistoryPanel:
         except Exception as e:
             print(f"Error adding to history: {e}")
 
-    def add_macro_event(self, event_type: str):
+    def add_macro_event(self, event_type: str, details: str = None):
         """Add a macro-related event to the history."""
         timestamp = datetime.now()
         timestamp_str = timestamp.strftime("%H:%M:%S.%f")[:-3]
@@ -105,10 +105,16 @@ class HistoryPanel:
             "playback_end": "=== Macro Playback Completed ===",
             "record_start": "=== Macro Recording Started ===",
             "record_end": "=== Macro Recording Completed ===",
+            "macro_error": "=== Macro Error ===",
+            "macro_assign": "=== Macro Assignment ===",
+            "macro_delete": "=== Macro Deleted ===",
+            "macro_timing": "=== Macro Timing Adjusted ==="
         }
         
         message = event_messages.get(event_type, "=== Macro Event ===")
         history_entry = f"[{timestamp_str}] {message}\n"
+        if details:
+            history_entry += f"    {details}\n"
         self.history_text.insert(tk.END, history_entry, "macro_event")
         self.history_text.see(tk.END)
 

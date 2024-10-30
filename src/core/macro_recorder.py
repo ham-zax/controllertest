@@ -37,13 +37,22 @@ class MacroRecorder:
 
     def start_recording(self):
         """Start recording a new macro"""
+        if self.recording:
+            return False
         self.recording = True
         self.current_macro = []
         self.record_start_time = time.time()
         self.logger.info("Started recording macro")
+        if self.history_panel:
+            self.history_panel.add_macro_event("record_start", 
+                details="Started recording new macro")
+        return True
 
     def stop_recording(self, name: str = None):
         """Stop recording the current macro and optionally save it"""
+        if not self.recording:
+            return None
+            
         self.recording = False
         self.record_start_time = None
         
@@ -51,6 +60,13 @@ class MacroRecorder:
             self.saved_macros[name] = self.current_macro.copy()
             self._save_to_file()
             self.logger.info(f"Saved macro '{name}'")
+            if self.history_panel:
+                self.history_panel.add_macro_event("record_end", 
+                    details=f"Saved macro '{name}' with {len(self.current_macro)} events")
+        else:
+            if self.history_panel:
+                self.history_panel.add_macro_event("record_end", 
+                    details="Recording stopped without saving")
         
         self.logger.info("Stopped recording macro")
         return self.current_macro
@@ -71,15 +87,21 @@ class MacroRecorder:
     def play_macro(self, name: str = None, macro: List[Dict] = None):
         """Start playing back a macro"""
         if self.playing:
-            return
+            return False
             
         if name and name in self.saved_macros:
             macro = self.saved_macros[name]
             self.logger.info(f"Starting playback of macro '{name}' with {len(macro)} events")
+            if self.history_panel:
+                self.history_panel.add_macro_event("playback_start", 
+                    details=f"Playing macro '{name}' ({len(macro)} events)")
         elif macro:
             self.logger.info(f"Starting playback of unnamed macro with {len(macro)} events")
+            if self.history_panel:
+                self.history_panel.add_macro_event("playback_start", 
+                    details=f"Playing unnamed macro ({len(macro)} events)")
         else:
-            return
+            return False
             
         self.playing = True
         self.playback_thread = threading.Thread(target=self._playback_thread, args=(macro,))
@@ -87,10 +109,15 @@ class MacroRecorder:
 
     def stop_playback(self):
         """Stop the current macro playback"""
+        if not self.playing:
+            return
         self.playing = False
         if self.playback_thread:
             self.playback_thread.join()
         self.logger.info("Stopped macro playback")
+        if self.history_panel:
+            self.history_panel.add_macro_event("playback_end", 
+                details="Macro playback stopped")
 
     def _playback_thread(self, macro: List[Dict]):
         """Thread function for playing back a macro"""
