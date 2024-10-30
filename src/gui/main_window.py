@@ -5,7 +5,6 @@ from tkinter import ttk
 from datetime import datetime
 import logging
 import json
-import threading
 import time
 import vgamepad
 from src.core.controller_reader import ControllerReader
@@ -44,6 +43,9 @@ class MainWindow:
         
         # Set up window close handler
         self.window.protocol("WM_DELETE_WINDOW", self.on_closing)
+        
+        # Schedule controller polling
+        self.schedule_controller_poll()
 
     def setup_logging(self):
         """Setup logging configuration."""
@@ -63,11 +65,19 @@ class MainWindow:
         self.macro_recorder = MacroRecorder(virtual_gamepad)
         self.input_processor = InputProcessor(self)
         self.controller_reader = ControllerReader(self.input_processor)
-        
-        # Start controller thread
-        self.controller_thread = threading.Thread(target=self.controller_reader.start)
-        self.controller_thread.daemon = True
-        self.controller_thread.start()
+
+    def schedule_controller_poll(self):
+        """Schedule the next controller poll."""
+        if self.running:
+            try:
+                # Process any pending controller events
+                self.controller_reader.start()
+                # Schedule next poll
+                self.window.after(16, self.schedule_controller_poll)  # ~60Hz polling
+            except Exception as e:
+                self.logger.error(f"Error polling controller: {e}")
+                # Retry after delay on error
+                self.window.after(1000, self.schedule_controller_poll)
 
     def setup_gui(self):
         """Setup the main GUI components."""
@@ -113,13 +123,7 @@ class MainWindow:
         try:
             self.logger.info("Application shutting down...")
             self.running = False
-            self.controller_reader.stop()
-            
-            if self.controller_thread.is_alive():
-                self.controller_thread.join(timeout=2.0)
-                
             self.save_application_state()
-            
         except Exception as e:
             self.logger.error(f"Error during shutdown: {e}")
         finally:
