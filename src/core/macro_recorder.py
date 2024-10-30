@@ -1,6 +1,5 @@
 """Module for recording and playing back controller macros"""
 import json
-import threading
 import time
 from typing import Dict, List, Optional
 import vgamepad
@@ -16,7 +15,6 @@ class MacroRecorder:
         self.playing = False
         self.current_macro: List[Dict] = []
         self.record_start_time: Optional[float] = None
-        self.playback_thread: Optional[threading.Thread] = None
         self.logger = logging.getLogger(__name__)
         self.saved_macros: Dict[str, List[Dict]] = {}
         self.button_assignments: Dict[str, str] = {}
@@ -73,7 +71,7 @@ class MacroRecorder:
         self.logger.debug(f"Recorded event: {event_type} {code} {state} delay={delay}")
 
     def play_macro(self, name: str = None, macro: List[Dict] = None):
-        """Start playing back a macro"""
+        """Play back a macro synchronously"""
         if self.playing:
             return
             
@@ -90,23 +88,19 @@ class MacroRecorder:
             return
             
         self.playing = True
-        self.playback_thread = threading.Thread(target=self._playback_thread, args=(macro,))
-        self.playback_thread.start()
+        self._play_events(macro)
+        self.playing = False
+        if self.history_panel:
+            self.history_panel.add_macro_event("playback_end")
 
     def stop_playback(self):
         """Stop the current macro playback"""
-        if not self.playing:
-            return
-            
         self.playing = False
-        if self.playback_thread and self.playback_thread.is_alive():
-            self.playback_thread.join()
         self.logger.info("Stopped macro playback")
 
-    def _playback_thread(self, macro: List[Dict]):
-        """Thread function for playing back a macro"""
+    def _play_events(self, macro: List[Dict]):
+        """Play back macro events synchronously"""
         if not macro:
-            self.playing = False
             return
 
         try:
@@ -185,12 +179,6 @@ class MacroRecorder:
 
         except Exception as e:
             self.logger.error(f"Error during macro playback: {str(e)}")
-        finally:
-            # Ensure playing state is reset and completion is logged
-            was_playing = self.playing
-            self.playing = False
-            if was_playing and self.history_panel:
-                self.history_panel.add_macro_event("playback_end")
 
     def delete_macro(self, name: str):
         """Delete a saved macro"""

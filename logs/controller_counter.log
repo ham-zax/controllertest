@@ -147,3 +147,4 @@
 2024-10-30 05:47:41,211 - src.core.macro_recorder - INFO - Starting playback of macro 'test' with 2 events
 2024-10-30 05:47:51,598 - MainWindow - INFO - Application shutting down...
 2024-10-30 05:50:16,032 - src.core.macro_recorder - INFO - Starting playback of macro 'test' with 2 events
+2024-10-30 05:56:25,221 - src.core.macro_recorder - INFO - Starting playback of macro 'test' with 2 events
