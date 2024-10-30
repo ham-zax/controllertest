@@ -45,6 +45,44 @@
         "state": 0,
         "delay": 1730246548.2402542
       }
+    ],
+    "test": [
+      {
+        "type": "Key",
+        "code": "BTN_WEST",
+        "state": 1,
+        "delay": 1730251573.0758324
+      },
+      {
+        "type": "Key",
+        "code": "BTN_WEST",
+        "state": 0,
+        "delay": 1730251573.196834
+      },
+      {
+        "type": "Key",
+        "code": "BTN_WEST",
+        "state": 1,
+        "delay": 1730251573.301996
+      },
+      {
+        "type": "Key",
+        "code": "BTN_WEST",
+        "state": 0,
+        "delay": 1730251573.3817906
+      },
+      {
+        "type": "Key",
+        "code": "BTN_WEST",
+        "state": 1,
+        "delay": 1730251573.50279
+      },
+      {
+        "type": "Key",
+        "code": "BTN_WEST",
+        "state": 0,
+        "delay": 1730251573.628286
+      }
     ]
   },
   "assignments": {

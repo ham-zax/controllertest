@@ -22,3 +22,5 @@ env/
 .idea/
 *.swp
 *.swo
+.aider*
+.env
