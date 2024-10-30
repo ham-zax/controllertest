@@ -1,27 +1,33 @@
-# Logs
-logs/
-*.log
-
-# Python cache files
+# Byte-compiled / optimized / DLL files
 __pycache__/
-*/__pycache__
 *.py[cod]
 *$py.class
+**/__pycache__/
 
-# Python distribution / packaging
+# Logs and databases
+logs/
+*.log
+log/
+
+# Distribution / packaging
 dist/
 build/
 *.egg-info/
+*.egg
 
-# Virtual environment
+# Virtual environments
 venv/
 env/
 .env/
+.venv/
+ENV/
 
 # IDE specific files
 .vscode/
 .idea/
 *.swp
 *.swo
+
+# Project specific
 .aider*
 .env
